@@ -30,10 +30,10 @@ class Server {
     // Parse and read body
     this.app.use(express.json())
 
-  //   this.app.use('*', (req, res, next) => {
-  //     console.log(req.method, req.baseUrl /* req.headers */)
-  //     next()
-  //   })
+    this.app.use('*', (req, res, next) => {
+      console.log(req.method, req.baseUrl /* req.headers */)
+      next()
+    })
   }
 
   // ---------------------------------------------------------
