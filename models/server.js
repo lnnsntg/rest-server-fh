@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const router = require('../routes/user')
+const router = require('../routes/users')
 const { dbConnection } = require('../db/config')
 
 class Server {
