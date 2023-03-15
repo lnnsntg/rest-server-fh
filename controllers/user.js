@@ -31,10 +31,9 @@ const usersPost = async (req = request, res = response) => {
     // Hasherar la contraseña
     const salt = bcryptjs.genSaltSync()
     user.password = bcryptjs.hashSync(password, salt)
-    console.log('consolelog===', user.password)
 
     await user.save()
-    res.send({
+    res.json({
       user
     })
   } catch (error) {
