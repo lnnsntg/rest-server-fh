@@ -1,6 +1,8 @@
 const { request, response } = require('express')
 const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
+const { existEmail } = require('../helpers/db-validators')
+
 
 // --------------------------------------------------
 const usersGet = (req = request, res = response) => {
@@ -21,12 +23,7 @@ const usersPost = async (req = request, res = response) => {
     const user = new User({ name, email, password, role })
 
     // Verificar si el correo existe
-    const existEmail = await User.findOne({ email })
-    if (existEmail) {
-      return res.status(400).json({
-        message: 'El usuario ya existe'
-      })
-    }
+    existEmail({mail}) 
 
     // Hasherar la contraseña
     const salt = bcryptjs.genSaltSync()
