@@ -3,15 +3,17 @@ const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
 const { existEmail } = require('../helpers/db-validators')
 
-// --------------------------------------------------
-const usersGet = (req = request, res = response) => {
+// Get users ------------------------------------------------
+const usersGet = async (req = request, res = response) => {
   const { name, lastname } = req.query
   console.log(name, lastname)
+  const users = await User.find({})
 
   res.status(200).json({
     msg: 'get API - controlador',
     name,
-    lastname
+    lastname,
+    users
   })
 }
 
@@ -56,6 +58,7 @@ const usersDelete = (req = request, res = response) => {
 const usersPut = async (req = request, res = response) => {
   const { id } = req.params
   const { _id, password, google, email, ...rest } = req.body
+  console.log(rest)
 
   // Todo validar contra base de datos
   if (password) {
