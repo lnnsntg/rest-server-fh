@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const router = require('../routes/users')
+const router = require('../routes/users.routes')
 const { dbConnection } = require('../db/config')
 const morgan = require('morgan')
 
@@ -24,7 +24,7 @@ class Server {
   // ---------------------------------------------------------
   middlewares () {
     this.app.use(express.static('public'))
-    // Morgan 
+    // Morgan
     this.app.use(morgan('tiny'))
 
     // CORS
@@ -32,7 +32,7 @@ class Server {
 
     // Parse and read body
     this.app.use(express.json())
-    
+
     // Este middlewares captura el metodo y url para mostrarlo en consola
     // this.app.use('*', (req, res, next) => {
     //   console.log(req.method, req.baseUrl /* req.headers */)

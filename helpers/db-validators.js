@@ -9,13 +9,13 @@ const isValidRole = async (role = 'USER') => {
   }
 }
 
+const existEmail = async email => {
+  const exist = await User.findOne({ email })
+  console.log(email)
 
-const existEmail = async (email) => {
-  exist = await User.findOne({ email })
   if (exist) {
-    throw new Error(`El email ${email} ya esta registrado en la bd`)
+    throw new Error(`El email: ${email} ya esta registrado en la bd`)
   }
 }
-
 
 module.exports = { isValidRole, existEmail }
