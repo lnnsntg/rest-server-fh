@@ -4,11 +4,17 @@ const User = require('../models/user')
 const { existEmail } = require('../helpers/db-validators')
 
 // Get users ------------------------------------------------
+
 const usersGet = async (req = request, res = response) => {
-  const users = await User.find({})
+  const { limit, desde } = req.query
+
+  const [users, total] = await Promise.all([
+    await User.find({}).skip(Number(desde)).limit(Number(limit)),
+    await User.countDocuments({ state: true })
+  ])
 
   res.status(200).json({
-    msg: 'get API - controlador',
+    total,
     users
   })
 }
@@ -45,10 +51,14 @@ const usersPatch = (req = request, res = response) => {
 }
 
 // USER DELETE--------------------------------------------------
+
 // Este controlador no borra el usuario sino que marca su estado a false
 const usersDelete = async (req = request, res = response) => {
   const { id } = req.params
-  const user = await User.findByIdAndDelete(id)
+
+  // Esta instrucion si borra el usuario pero esta deshabilitad
+  // const user = await User.findByIdAndDelete(id)
+  const user = await User.findByIdAndUpdate(id, { state: false })
   res.status(200).json({
     msg: id
   })
