@@ -5,14 +5,10 @@ const { existEmail } = require('../helpers/db-validators')
 
 // Get users ------------------------------------------------
 const usersGet = async (req = request, res = response) => {
-  const { name, lastname } = req.query
-  console.log(name, lastname)
   const users = await User.find({})
 
   res.status(200).json({
     msg: 'get API - controlador',
-    name,
-    lastname,
     users
   })
 }
@@ -47,18 +43,22 @@ const usersPatch = (req = request, res = response) => {
     msg: 'patch API'
   })
 }
-const usersDelete = (req = request, res = response) => {
+
+// USER DELETE--------------------------------------------------
+// Este controlador no borra el usuario sino que marca su estado a false
+const usersDelete = async (req = request, res = response) => {
+  const { id } = req.params
+  const user = await User.findByIdAndDelete(id)
   res.status(200).json({
-    msg: 'delete API'
+    msg: id
   })
 }
 
-// Update User -------------------------------------
+// Update User Actualiza un los campos name, password role, state, ----------------------------------
 
 const usersPut = async (req = request, res = response) => {
   const { id } = req.params
   const { _id, password, google, email, ...rest } = req.body
-  console.log(rest)
 
   // Todo validar contra base de datos
   if (password) {
@@ -66,13 +66,10 @@ const usersPut = async (req = request, res = response) => {
     rest.password = bcryptjs.hashSync(password, salt)
   }
 
-  console.log(id)
-  console.log(rest)
   const user = await User.findByIdAndUpdate(id, rest)
   // console.log(user)
 
   res.status(201).json({
-    msg: 'put API',
     user
   })
 }

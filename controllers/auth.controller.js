@@ -10,8 +10,6 @@ const login = async (req = request, res = response) => {
     // Verficar si el email existe
     const user = await User.findOne({ email })
 
-    // console.log(user)
-
     if (!user) {
       return res
         .status(400)
@@ -32,11 +30,10 @@ const login = async (req = request, res = response) => {
     }
 
     // Generar el JWT
-    const token = await getToken(user.id)
+    const token = await getToken(user.uid)
 
     res.status(200).json({
-      email,
-      password,
+      user,
       token
     })
   } catch (error) {
