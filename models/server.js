@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const router = require('../routes/users.routes')
+const userRouter = require('../routes/users.routes')
+const authRouter = require('../routes/auth.routes')
 const { dbConnection } = require('../db/config')
 const morgan = require('morgan')
 
@@ -42,7 +43,8 @@ class Server {
 
   // ---------------------------------------------------------
   routes () {
-    this.app.use('/api/users', router)
+    this.app.use('/api/users', userRouter)
+    this.app.use('/api/auth', authRouter)
   }
 
   // ---------------------------------------------------------

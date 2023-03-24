@@ -5,7 +5,7 @@ const {
   usersDelete,
   usersPatch,
   usersPut
-} = require('../controllers/user')
+} = require('../controllers/user.controller')
 const { check } = require('express-validator')
 const { validarCampos } = require('../middlewares/validar-campos')
 const {
