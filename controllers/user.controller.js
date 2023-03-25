@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
 const { existEmail } = require('../helpers/db-validators')
 
-// Get users ------------------------------------------------
+// GET USERS --------------------------------------------
 
 const usersGet = async (req = request, res = response) => {
   const { limit, desde } = req.query
@@ -19,7 +19,7 @@ const usersGet = async (req = request, res = response) => {
   })
 }
 
-// CREATE USER
+// CREATE USER ------------------------------------------------
 const usersPost = async (req = request, res = response) => {
   const { name, email, password, role } = req.body
 
@@ -29,7 +29,7 @@ const usersPost = async (req = request, res = response) => {
     // Verificar si el correo existe
     existEmail(email)
 
-    // Hasherar la contraseña
+    // Hashear la contraseña
     const salt = bcryptjs.genSaltSync()
     user.password = bcryptjs.hashSync(password, salt)
 
@@ -43,28 +43,8 @@ const usersPost = async (req = request, res = response) => {
   }
 }
 
-// --------------------------------------------------
-const usersPatch = (req = request, res = response) => {
-  res.status(201).json({
-    msg: 'patch API'
-  })
-}
-
-// USER DELETE--------------------------------------------------
-
-// Este controlador no borra el usuario sino que marca su estado a false
-const usersDelete = async (req = request, res = response) => {
-  const { id } = req.params
-
-  // Esta instrucion si borra el usuario pero esta deshabilitad
-  // const user = await User.findByIdAndDelete(id)
-  const user = await User.findByIdAndUpdate(id, { state: false })
-  res.status(200).json({
-    msg: id
-  })
-}
-
-// Update User Actualiza un los campos name, password role, state, ----------------------------------
+// UPDATE USER -------------------------------------------------------
+// Actualiza un los campos name, password role, state
 
 const usersPut = async (req = request, res = response) => {
   const { id } = req.params
@@ -81,6 +61,24 @@ const usersPut = async (req = request, res = response) => {
 
   res.status(201).json({
     user
+  })
+}
+
+// USER DELETE--------------------------------------------------
+// Este controlador no borra el usuario sino que marca su estado a false
+const usersDelete = async (req = request, res = response) => {
+  const { id } = req.params
+
+  // Esta instrucción si borra el usuario pero está deshabilitada
+  // const user = await User.findByIdAndDelete(id)
+  const user = await User.findByIdAndUpdate(id, { state: false })
+  res.status(200).json(user)
+}
+
+// --------------------------------------------------
+const usersPatch = (req = request, res = response) => {
+  res.status(201).json({
+    msg: 'patch API'
   })
 }
 
