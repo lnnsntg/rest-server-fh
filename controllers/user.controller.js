@@ -65,13 +65,20 @@ const usersPut = async (req = request, res = response) => {
 }
 
 // USER DELETE--------------------------------------------------
-// Este controlador no borra el usuario sino que marca su estado a false
+// Este controlador no borra el usuario sino que marca su estado a false (como si estuviera borrado pero no)
 
 const usersDelete = async (req, res) => {
+  // Extraigo el id enviado por el segmento url
   const { id } = req.params
 
-  const user = await User.findByIdAndUpdate(id, { state: false })
-  res.status(200).json(user)
+  try {
+    // Actualizo el estado del usuario a "borrar" y pongo su state en false
+    const user = await User.findByIdAndUpdate(id, { state: false })
+
+    res.status(200).json({ user, message: 'El usuario ha sido borrado' })
+  } catch (error) {
+    res.status(500).json({ message: 'No se pudo borrar usuario' })
+  }
 }
 
 // --------------------------------------------------
