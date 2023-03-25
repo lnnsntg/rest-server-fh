@@ -14,9 +14,9 @@ router.post(
   '/login',
   [
     check('email', 'El email es obligatorio').isEmail(),
-    check('password', 'Contraseña válida requerida').not().isEmpty()
+    check('password', 'Contraseña válida requerida').not().isEmpty(),
+    validarCampos
   ],
-  validarCampos,
   login
 )
 

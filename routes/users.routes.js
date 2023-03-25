@@ -54,10 +54,10 @@ router.delete(
   '/:id',
   validateJWT,
   [
-    (check('id', 'el ID tiene que ser mongodb id valido').isMongoId(),
-    check('id').custom(existUserID))
+    check('id', 'el ID tiene que ser mongodb id valido').isMongoId(),
+    check('id').custom(existUserID),
+    validarCampos
   ],
-  validarCampos,
   usersDelete
 )
 

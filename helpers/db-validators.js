@@ -20,7 +20,6 @@ const existEmail = async email => {
 
 const existUserID = async id => {
   const exist = await User.findById(id)
-  console.log(id)
 
   if (!exist) {
     throw new Error(`El ID: ${id} ya no existe en la bd`)

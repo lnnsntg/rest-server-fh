@@ -1,15 +1,14 @@
 const { request, response } = require('express')
 const bcryptjs = require('bcryptjs')
 const User = require('../models/user')
-const { existEmail } = require('../helpers/db-validators')
 const getToken = require('../helpers/getToken')
 
 const login = async (req = request, res = response) => {
   const { email, password } = req.body
-  try {
-    // Verficar si el email existe
-    const user = await User.findOne({ email })
 
+  try {
+    // Verificar si el email existe
+    const user = await User.findOne({ email })
     if (!user) {
       return res
         .status(400)
@@ -23,14 +22,15 @@ const login = async (req = request, res = response) => {
         .json({ message: 'Bad request el usuario esta bloqueado' })
     }
 
-    // Verificar si el usuario esta activo
+    // Verificar la contraseña
     const validPassword = await bcryptjs.compare(password, user.password)
     if (!validPassword) {
-      return res.status(400).json({ message: 'Bad request password apestaA' })
+      return res.status(400).json({ message: 'Bad request password apesta' })
     }
 
     // Generar el JWT
-    const token = await getToken(user.uid)
+
+    const token = await getToken(user.id)
 
     res.status(200).json({
       user,

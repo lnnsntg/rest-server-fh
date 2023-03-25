@@ -17,7 +17,7 @@ class Server {
     this.routes()
   }
 
-  // Llamada asíncrona a la conexion de la bd
+  // Llamada asíncrona a la conexión de la bd
   async conectarDB () {
     await dbConnection()
   }
@@ -26,7 +26,7 @@ class Server {
   middlewares () {
     this.app.use(express.static('public'))
     // Morgan
-    this.app.use(morgan('tiny'))
+    // this.app.use(morgan('tiny'))
 
     // CORS
     this.app.use(cors())
@@ -34,7 +34,7 @@ class Server {
     // Parse and read body
     this.app.use(express.json())
 
-    // Este middlewares captura el metodo y url para mostrarlo en consola
+    // Este middlewares captura el método y url para mostrarlo en consola
     // this.app.use('*', (req, res, next) => {
     //   console.log(req.method, req.baseUrl /* req.headers */)
     //   next()

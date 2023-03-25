@@ -66,11 +66,10 @@ const usersPut = async (req = request, res = response) => {
 
 // USER DELETE--------------------------------------------------
 // Este controlador no borra el usuario sino que marca su estado a false
-const usersDelete = async (req = request, res = response) => {
+
+const usersDelete = async (req, res) => {
   const { id } = req.params
 
-  // Esta instrucción si borra el usuario pero está deshabilitada
-  // const user = await User.findByIdAndDelete(id)
   const user = await User.findByIdAndUpdate(id, { state: false })
   res.status(200).json(user)
 }
