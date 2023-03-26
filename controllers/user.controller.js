@@ -74,7 +74,8 @@ const usersDelete = async (req, res) => {
   try {
     // Actualizo el estado del usuario a "borrar" y pongo su state en false
     const user = await User.findByIdAndUpdate(id, { state: false })
-
+    // Aquí recibo el usuario autenticado via request solo con fines ilustrativo
+    // const autenticateUser = req.user
     res.status(200).json({ user, message: 'El usuario ha sido borrado' })
   } catch (error) {
     res.status(500).json({ message: 'No se pudo borrar usuario' })
