@@ -12,9 +12,7 @@ const {
   existUserID
 } = require('../helpers/db-validators')
 const { check } = require('express-validator')
-const { validateJWT } = require('../middlewares/validate-jwt')
-const { validarCampos } = require('../middlewares/validar-campos')
-const { isAdmin } = require('../middlewares/validar-role')
+const { validateJWT, validarCampos, hasRole } = require('../middlewares/')
 
 const router = Router()
 
@@ -54,7 +52,8 @@ router.post(
 router.delete(
   '/:id',
   validateJWT,
-  isAdmin,
+  // isAdmin,
+  hasRole('ADMIN', 'VENTAS'),
   [
     check('id', 'el ID tiene que ser mongodb id valido').isMongoId(),
     check('id').custom(existUserID),

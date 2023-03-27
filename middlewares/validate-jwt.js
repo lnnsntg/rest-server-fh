@@ -22,14 +22,14 @@ const validateJWT = async (req, res, next) => {
       })
     }
 
-    // Verificar si el usuario existe en true state (esto quiere decir que el usuario no ha sido dado de baja)
+    // Verificar si el usuario existe en true state (esto quiere decir que el usuario no ha sido anotado como borrado)
     if (!user.state) {
       return res.status(401).json({
         message: 'El usuario autenticado tiene state false'
       })
     }
 
-    // Añado el usuario a la request para que lo reciba el controlador
+    // Añado el usuario a la request para que lo reciba el controlador y demás middlewares
     req.user = user
 
     next()
